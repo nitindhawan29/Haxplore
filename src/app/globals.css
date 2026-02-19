@@ -1,0 +1,58 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+
+
+
+
+
+@theme {
+  --color-primary: #0ea5a4;
+  --color-secondary: #06b6d4;
+  --color-success: #10b981;
+  --color-warning: #f59e0b;
+  --color-danger: #ef4444;
+
+  --color-background: #ffffff;
+  --color-foreground: #0f172a;
+
+  --color-border: #e2e8f0;
+  --color-input: #e2e8f0;
+  --color-ring: #0ea5a4;
+}
+
+/* Custom Utilities */
+.glass {
+  @apply bg-white/70 backdrop-blur-md border border-white/20 shadow-xl;
+}
+
+.glass-dark {
+  @apply bg-black/60 backdrop-blur-md border border-white/10 shadow-xl;
+}
+
+/* Dark mode overrides if needed, but keeping light mode default for MVP as per most screens */
+@media (prefers-color-scheme: dark) {
+  :root {
+    /* define dark mode vars if using --color-*, but @theme handles mapping. 
+       For v4 simple setup, we'll stick to 'dark:' classes or just light mode default for safety.
+    */
+  }
+}
+
+body {
+  @apply bg-slate-50 text-slate-900 dark:bg-slate-950 dark:text-slate-100 transition-colors duration-300;
+}
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+.no-scrollbar {
+  -ms-overflow-style: none;
+  /* IE and Edge */
+  scrollbar-width: none;
+  /* Firefox */
+}

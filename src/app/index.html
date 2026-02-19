@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GreenLoop Bhopal • Digital Recycling</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;900&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root { --green: #22c55e; --dark: #166534; }
+* { margin:0; padding:0; box-sizing:border-box; }
+body { font-family: 'Inter', sans-serif; background: #f8fafc; color: #1f2937; overflow-x: hidden; }
+.hero { height: 100vh; background: linear-gradient(rgba(0,0,0,0.75), rgba(0,0,0,0.75)), url('https://images.unsplash.com/photo-1611003229186-5e40c5f423a3') center/cover no-repeat; display: flex; align-items: center; justify-content: center; text-align: center; color: white; position: relative; }
+.hero-content { z-index: 2; max-width: 900px; padding: 0 20px; }
+.hero .recycle-symbol { font-size: 280px; margin-bottom: -40px; animation: spin 6s linear infinite, float 3s ease-in-out infinite alternate; }
+@keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+@keyframes float { from { transform: translateY(0); } to { transform: translateY(-30px); } }
+.hero h1 { font-size: 4.2rem; font-weight: 900; line-height: 1.1; margin-bottom: 20px; }
+.hero .tag { font-size: 1.8rem; font-weight: 500; opacity: 0.95; margin-bottom: 40px; }
+
+.floating-icons { position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; overflow: hidden; }
+.float { position: absolute; font-size: 50px; opacity: 0.15; animation: floatUp 25s linear infinite; }
+@keyframes floatUp { 0% { transform: translateY(100vh) rotate(0deg); } 100% { transform: translateY(-100px) rotate(360deg); } }
+
+.section { padding: 100px 0; }
+.container { max-width: 1280px; margin: auto; padding: 0 2rem; }
+
+.stats { display: flex; justify-content: center; gap: 80px; flex-wrap: wrap; background: white; padding: 60px 0; box-shadow: 0 20px 40px rgba(0,0,0,0.1); }
+.stat { text-align: center; }
+.stat-number { font-size: 3.8rem; font-weight: 900; color: var(--green); line-height: 1; }
+.stat-label { font-size: 1.1rem; margin-top: 12px; opacity: 0.8; }
+
+.items-grid-top { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 30px; margin-bottom: 50px; }
+.items-grid-bottom { display: grid; grid-template-columns: 1fr 2fr; gap: 30px; }
+.item-card { background: white; border-radius: 24px; overflow: hidden; box-shadow: 0 15px 40px rgba(0,0,0,0.12); transition: all 0.5s; position: relative; }
+.item-card:hover { transform: scale(1.08) rotate(2deg); }
+.item-card img { width: 100%; height: 260px; object-fit: cover; transition: transform 0.4s; }
+.item-card:hover img { transform: scale(1.1); }
+.item-overlay { position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: linear-gradient(transparent, rgba(22,101,52,0.9)); display: flex; align-items: flex-end; padding: 30px; color: white; opacity: 0; transition: 0.4s; }
+.item-card:hover .item-overlay { opacity: 1; }
+
+.how-works { background: #ecfdf5; padding: 80px 0; text-align: center; }
+.how-works img { max-width: 100%; border-radius: 24px; box-shadow: 0 25px 60px rgba(0,0,0,0.15); margin: 40px auto 0; display: block; }
+
+.rewards-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 40px; margin-top: 50px; justify-items: center; }
+.reward-card { background: white; padding: 40px 30px; border-radius: 24px; box-shadow: 0 20px 50px rgba(0,0,0,0.12); text-align: center; transition: 0.3s; max-width: 320px; width: 100%; }
+.reward-card:hover { transform: translateY(-15px); }
+.reward-icon { font-size: 90px; margin-bottom: 25px; }
+.reward-card h3 { font-size: 1.5rem; margin-bottom: 8px; }
+.reward-card p { font-size: 1.9rem; font-weight: 700; color: var(--green); margin-bottom: 30px; }
+
+.cta-big { background: var(--green); color: white; padding: 16px 50px; border: none; border-radius: 999px; font-size: 1.25rem; font-weight: 700; cursor: pointer; width: 100%; transition: 0.3s; }
+.cta-big:hover { transform: scale(1.05); }
+
+.theme-lines { text-align: center; font-size: 1.4rem; font-weight: 600; color: var(--dark); background: #ecfdf5; padding: 40px 0; margin: 60px 0; }
+.theme-lines span { display: block; margin: 20px 0; opacity: 0.85; }
+
+footer { background: #111827; color: #9ca3af; padding: 80px 0 40px; text-align: center; }
+</style>
+</head>
+<body>
+
+<section class="hero">
+<div class="floating-icons" id="floating"></div>
+<div class="hero-content">
+<div class="recycle-symbol">♻️</div>
+<h1>Recycle Your Gadgets.<br>Earn Real Rewards.<br>Save Bhopal.</h1>
+<p class="tag">Your old phones, laptops, cables & circuit boards become trees, jobs & a cleaner city.</p>
+<button onclick="document.getElementById('items').scrollIntoView({behavior:'smooth'})" class="cta-big">Drop Off Today →</button>
+</div>
+</section>
+
+<section class="section" style="padding:60px 0;">
+<div class="stats" id="stats">
+  <div class="stat"><div class="stat-number" data-target="18000">0</div><div class="stat-label">Tonnes of e-waste diverted</div></div>
+  <div class="stat"><div class="stat-number" data-target="1557">0</div><div class="stat-label">Trees saved this year</div></div>
+  <div class="stat"><div class="stat-number" data-target="1345">0</div><div class="stat-label">Rewards given in Bhopal</div></div>
+</div>
+</section>
+
+<section id="items" class="section">
+<div class="container">
+<h2 style="text-align:center;font-size:2.8rem;margin-bottom:60px;color:var(--dark);">We Accept These Every Day</h2>
+<!-- your existing 4 item cards stay the same -->
+</div>
+</section>
+
+
+
+
+
+
+
+    <!-- Top 3 cards -->
+
+
+      
+
+      
+
+    <!-- Bottom wide layout -->
+
+    <div class="items-grid-bottom">
+      <div class="item-card">
+        <img src="https://images.unsplash.com/photo-1587825140708-dfaf72ae4b04" alt="Circuit Boards">
+        <div class="item-overlay">
+          <h3>Circuit Boards</h3>
+        </div>
+      </div>
+
+      <div class="item-card">
+        <img src="https://images.unsplash.com/photo-1518770660439-4636190af475" alt="Micro Electronics">
+        <div class="item-overlay">
+          <h3>Micro-Electronics & Chips</h3>
+        </div>
+      </div>
+    </div>
+    
+
+  </div>
+  
+</section>
+
+<div class="theme-lines">
+<span>“One phone recycled = 100 litres of clean water protected”</span>
+<span>“Your old laptop becomes someone’s future”</span>
+<span>“Bhopal is rising — one gadget at a time”</span>
+<span>“Trash today. Treasure tomorrow.”</span>
+</div>
+
+<!-- your 3 YouTube videos stay the same -->
+</section>
+
+<!-- UPDATED REWARDS SECTION – now with extra cable rewards -->
+<section class="section">
+<div class="container" style="text-align:center;">
+  <h2 style="font-size:2.8rem;margin-bottom:40px;">Turn Points into Rewards</h2>
+  
+  <div class="rewards-grid">
+    
+    <div class="reward-card">
+      <div class="reward-icon">💻</div>
+      <h3>Laptop</h3>
+      <p>500 Points</p>
+      <button onclick="redeem(500)" class="cta-big">Redeem Now</button>
+    </div>
+    
+    <div class="reward-card">
+      <div class="reward-icon">📱</div>
+      <h3>Mobile</h3>
+      <p>200 Points</p>
+      <button onclick="redeem(200)" class="cta-big">Redeem Now</button>
+    </div>
+    
+    <div class="reward-card">
+      <div class="reward-icon">🔌</div>
+      <h3>Cables Pack (10 pcs)</h3>
+      <p>100 Points</p>
+      <button onclick="redeem(100)" class="cta-big">Redeem Now</button>
+    </div>
+    
+    <!-- Extra cable reward 1 -->
+    <div class="reward-card">
+      <div class="reward-icon">🔋</div>
+      <h3>Fast Charging Cable Bundle</h3>
+      <p>150 Points</p>
+      <button onclick="redeem(150)" class="cta-big">Redeem Now</button>
+    </div>
+    
+    <!-- Extra cable reward 2 -->
+    <div class="reward-card">
+      <div class="reward-icon">🎧</div>
+      <h3>Wireless Earphones + Cable Set</h3>
+      <p>250 Points</p>
+      <button onclick="redeem(250)" class="cta-big">Redeem Now</button>
+    </div>
+    
+  </div>
+</div>
+</section>
+
+<footer>
+<p style="font-size:2rem;margin-bottom:20px;">♻️ GreenLoop Bhopal • Making our city beautiful again</p>
+<p>© 2026 • Every recycled gadget = A better future</p>
+</footer>
+
+<script>
+// Floating icons, counters, redeem function (same as before)
+function createFloatingIcons() {
+  const container = document.getElementById('floating');
+  const icons = ['♻️','📱','💻','🔌','🖥️','🔋','🗑️'];
+  for (let i = 0; i < 25; i++) {
+    const icon = document.createElement('div');
+    icon.className = 'float';
+    icon.textContent = icons[Math.floor(Math.random()*icons.length)];
+    icon.style.left = Math.random() * 100 + 'vw';
+    icon.style.animationDuration = (15 + Math.random() * 25) + 's';
+    icon.style.animationDelay = Math.random() * -30 + 's';
+    container.appendChild(icon);
+  }
+}
+createFloatingIcons();
+
+function animateCounters() {
+  document.querySelectorAll('.stat-number').forEach(counter => {
+    const target = parseInt(counter.getAttribute('data-target'));
+    let current = 0;
+    const duration = 2200;
+    const start = Date.now();
+    function update() {
+      const elapsed = Date.now() - start;
+      const progress = Math.min(elapsed / duration, 1);
+      current = Math.floor(progress * target);
+      counter.textContent = current.toLocaleString();
+      if (progress < 1) requestAnimationFrame(update);
+      else counter.textContent = target.toLocaleString();
+    }
+    update();
+  });
+}
+document.addEventListener('DOMContentLoaded', () => setTimeout(animateCounters, 600));
+
+function redeem(points) {
+  alert(`🎉 Reward redeemed! ${points} points used.\nThank you for saving Bhopal! 🌱`);
+}
+</script>
+</body>
+</html>
