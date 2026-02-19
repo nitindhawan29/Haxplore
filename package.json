@@ -1,6 +1,7 @@
 {
-  "name": "app",
-  "version": "0.1.0",
+  "name": "ecosmart",
+  "version": "1.0.0",
+  "description": "Smart E-Waste Management System with AI-powered scanning and rewards.",
   "private": true,
   "scripts": {
     "dev": "next dev",
